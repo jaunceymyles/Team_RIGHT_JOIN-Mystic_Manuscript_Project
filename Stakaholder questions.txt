@@ -1,12 +1,34 @@
-﻿Getting to know their role and interst:
+Data Structure and Formatting:
+
+How would you prefer the column names to be formatted? - Examples include underscore, dash, space, no space.
+
+What format to use for dates?
+
+Should we rename any columns for clarity or business context? - Examples include "Qtr" ->     "Quarter_Number".
+
+How should we handle empty or irrelevant columns?
+
+Do you have any naming conventions we must follow?
+
+
+Data Cleaning and Standardisation:
+
+How should we handle missing or null values? - Examples include leave blank, use defaults.
+
+Are there any specific outliers or anomalies you want flagged?
+
+Should we standardise categorical values - ‘M/F’ -> ‘Male/Female.
+
+
+
+
+Business and Analysis Goals:
+
+What are the main business questions that this dataset should answer?
+
+Getting to know their role and interst:
 -What are your expectations from this project?
 -What are you looking to get out of this project?
 -What are your responsibilites leading on from our project?
-
-
-
-
-
-
 
 -Aside from key deliverables, what would you consider some extended goals from this project?

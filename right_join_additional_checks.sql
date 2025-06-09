@@ -147,3 +147,12 @@ WHERE quantity < 0
    OR item_price < 0
    OR total_amount < 0
    OR profit_inr < 0;
+
+
+-- SQL-17 (Needs re-thinking about purchase_date formatting)
+
+SELECT * FROM mystic_manuscript.right_join
+WHERE
+    EXTRACT (YEAR FROM purchase_date) != "year" OR
+    EXTRACT (MONTH FROM purchase_date) != "month"  OR
+    EXTRACT (DAY FROM purchase_date) != date_day ;

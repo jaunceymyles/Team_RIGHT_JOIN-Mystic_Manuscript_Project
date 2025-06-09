@@ -164,7 +164,7 @@ SELECT * FROM mystic_manuscript.right_join_test;
 
 
 
--- Checking dates with time of days
+-- Checking datetimes with time of days
 SELECT
 	r.id,
 	CAST(r.purchase_date AS TIME),
@@ -181,6 +181,14 @@ WHERE
         ELSE FALSE
     END = FALSE;
 
+-- Checking dates with date_day month and year
+SELECT
+	r.id,
+	r.purchase_date,
+	CAST(r.purchase_date AS TIME),
+	r.time
+FROM
+	mystic_manuscript.right_join_test r;
 
 
 -- Checking the time of day is correct
@@ -243,4 +251,34 @@ SELECT
 FROM
 	mystic_manuscript.right_join_test r
 WHERE r.night = 1;
+
+--FIXING PURCHASE_DATE IN TEST
+CREATE TABLE mystic_manuscript.tmp_datetime (
+  id INT,
+  raw_datetime VARCHAR(50)
+);
+
+ALTER TABLE mystic_manuscript.right_join_test
+ADD COLUMN raw_datetime VARCHAR(20);
+
+UPDATE mystic_manuscript.right_join_test r
+SET raw_datetime = t.raw_datetime
+FROM mystic_manuscript.tmp_datetime t
+WHERE r.id = t.id;
+
+ALTER TABLE mystic_manuscript.right_join_test
+ADD COLUMN fixed_purchase_date TIMESTAMP;
+
+UPDATE mystic_manuscript.right_join_test
+SET fixed_purchase_date = TO_TIMESTAMP(raw_datetime, 'DD/MM/YYYY HH24:MI');
+
+ALTER TABLE mystic_manuscript.right_join_test
+DROP COLUMN raw_datetime;
+
+SELECT
+	*
+FROM
+	mystic_manuscript.right_join_test
+ORDER BY
+	id;
 

@@ -24,6 +24,7 @@ WHERE
 
 -- query4
 SELECT
+	SUM(r.id) +
 	SUM(r.qtr) +
 	SUM(r.year) +
 	SUM(r.month) +
@@ -34,6 +35,7 @@ SELECT
 	SUM(r.weekend) +
 	SUM(r.morning) +
 	SUM(r.afternoon) +
+	SUM(CAST(r.ship_postal_pode AS INT)) +
 	SUM(r.evening) +
 	SUM(r.night) +
 	SUM(r.gender_num) +
@@ -47,12 +49,20 @@ SELECT
 FROM
 	mystic_manuscript.right_join r;
 
---11,680,963.46
+--17737903.46
 
 -- query5
 
-SELECT
-	
+SELECT 
+    id,
+    COALESCE(item_price, 0) +
+    COALESCE(shipping_price, 0) +
+    COALESCE(quantity, 0) +
+    COALESCE(total_amount, 0) AS row_total
+FROM mystic_manuscript.right_join r
+WHERE id=1;
+
+(r.id, r.qtr, r.YEAR, r.MONTH, r.date_day, r.special_day, r.online_sale_offers, r.DAY, r.weekend, r.morning, r.afternoon, r.ship_postal_code, r.evening, r.night, r.gender_num, r.quantity, r.item_price, r.shipping_price, r.total_amount, r.profit_precentage, r.profit_inr, r.cost_price)
 
 -- query6
 

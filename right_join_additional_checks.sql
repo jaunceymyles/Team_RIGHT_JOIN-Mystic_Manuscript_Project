@@ -1,4 +1,4 @@
---Check for NULL
+-- queries 8
 SELECT
     COUNT(*) FILTER (WHERE id IS NULL),
     COUNT(*) FILTER (WHERE purchase_date IS NULL),

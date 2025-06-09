@@ -1,0 +1,43 @@
+-- TEAM RIGHT JOIN
+
+--CREATE TABLE
+
+CREATE TABLE mystic_manuscript.RIGHTJOIN(
+	ID INT PRIMARY KEY,
+	'Purchase-date',
+	'Date',
+	'Time',
+	'Quarter',
+	Qtr,
+	'Year',
+	'Month',
+	'Date',
+	'Special Day',
+	Online Sale Offers,
+	'Day',
+	Weekend,
+	Morning,
+	Afternoon,
+	Evening,
+	Night,
+	Gender,
+	Customer ID,
+	Gender,
+	'Product-Name',
+	Item-Status,
+	Quantity,
+	Currency,
+	Item Price,
+	Shipping-Price,
+	Ship-City,
+	Ship-State,
+	Ship-Postal-Code,
+	Category,
+	Total_,
+	amount,
+	Author ,
+	'Publication',
+	Profit Percentage,
+	Profit (INR),
+	'Cost Price'
+)

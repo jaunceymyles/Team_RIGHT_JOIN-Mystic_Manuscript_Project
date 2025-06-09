@@ -23,8 +23,6 @@ Should we standardise categorical values - ‘M/F’ -> ‘Male/Female.
 
 
 
-
-
 Business and Analysis Goals:
 
 What are the main business questions that this dataset should answer?
@@ -35,6 +33,11 @@ Getting to know their role and interst:
 -What are your responsibilites leading on from our project?
 
 -Aside from key deliverables, what would you consider some extended goals from this project?
+
+Deliverable Questions:
+
+-Query 4: what columns are you looking to be summed? there are some columns of numeric value that don't make much sense to be added. For example day and month being added to price?
+-Query 5: what are you looking to find out from sum of row sums?
 
 
 

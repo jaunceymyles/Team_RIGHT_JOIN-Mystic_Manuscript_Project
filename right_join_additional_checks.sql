@@ -156,3 +156,27 @@ WHERE
     EXTRACT (YEAR FROM purchase_date) != "year" OR
     EXTRACT (MONTH FROM purchase_date) != "month"  OR
     EXTRACT (DAY FROM purchase_date) != date_day ;
+
+
+
+
+
+
+
+
+-- Checking dates with time of days
+SELECT
+	r.id,
+	CAST(r.purchase_date AS TIME),
+	r.time,
+	CASE 
+        WHEN CAST(r.purchase_date AS TIME) = r.time THEN TRUE
+        ELSE FALSE
+    END AS "match"
+FROM
+	mystic_manuscript.right_join_test r
+WHERE
+	CASE 
+        WHEN CAST(r.purchase_date AS TIME) = r.time THEN TRUE
+        ELSE FALSE
+    END = FALSE;

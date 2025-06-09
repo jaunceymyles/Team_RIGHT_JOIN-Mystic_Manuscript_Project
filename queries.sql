@@ -83,10 +83,7 @@ FROM(
 	FROM mystic_manuscript.right_join r
 );
 
-(r.id, r.qtr, r.YEAR, r.MONTH, r.date_day, r.special_day, r.online_sale_offers, r.DAY, r.weekend, r.morning, r.afternoon, r.ship_postal_code, r.evening, r.night, r.gender_num, r.quantity, r.item_price, r.shipping_price, r.total_amount, r.profit_precentage, r.profit_inr, r.cost_price)
-
 -- query6
-
 SELECT
 	*
 FROM
@@ -95,7 +92,6 @@ WHERE
 	r.id IN ( 4, 69, 420, 3000, 2764 );
 
 -- query7
-	
 SELECT
 	*
 FROM

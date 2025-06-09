@@ -160,7 +160,7 @@ WHERE
 
 
 
-
+SELECT * FROM mystic_manuscript.right_join_test;
 
 
 
@@ -180,3 +180,67 @@ WHERE
         WHEN CAST(r.purchase_date AS TIME) = r.time THEN TRUE
         ELSE FALSE
     END = FALSE;
+
+
+
+-- Checking the time of day is correct
+SELECT *
+FROM(
+	SELECT
+		r.id,
+		CAST(r.purchase_date AS TIME),
+		r.time,
+		r.morning,
+		r.afternoon,
+		r.evening,
+		r.night,
+		CASE
+			WHEN r.morning = 1 AND (r.time <= '6:00:00' OR r.time > '12:00:00') THEN 'Incorrect Morning'
+			WHEN r.afternoon = 1 AND (r.time <= '12:00:00' OR r.time > '16:00:00') THEN 'Incorrect Afternoon'
+			WHEN r.evening = 1 AND (r.time <= '16:00:00' OR r.time > '20:00:00') THEN 'Incorrect Evening'
+			WHEN r.night = 1 AND NOT (r.time >= '20:00:00' OR r.time < '06:00:00') THEN 'Incorrect Night'
+			ELSE 'Correct'
+		END AS time_accuracy
+	FROM
+		mystic_manuscript.right_join_test r) sub
+WHERE
+	sub.time_accuracy <> 'Correct';
+
+SELECT
+	'morning' AS time_of_day,
+	MIN(r.time) AS "min",
+	MAX(r.time) AS "max"
+FROM
+	mystic_manuscript.right_join_test r
+WHERE r.morning = 1
+
+UNION ALL
+
+SELECT
+	'afternoon' AS time_of_day,
+	MIN(r.time) AS "min",
+	MAX(r.time) AS "max"
+FROM
+	mystic_manuscript.right_join_test r
+WHERE r.afternoon = 1
+
+UNION ALL
+
+SELECT
+	'evening' AS time_of_day,
+	MIN(r.time) AS "min",
+	MAX(r.time) AS "max"
+FROM
+	mystic_manuscript.right_join_test r
+WHERE r.evening = 1
+
+UNION ALL
+
+SELECT
+	'night' AS time_of_day,
+	MIN(r.time) AS "min",
+	MAX(r.time) AS "max"
+FROM
+	mystic_manuscript.right_join_test r
+WHERE r.night = 1;
+

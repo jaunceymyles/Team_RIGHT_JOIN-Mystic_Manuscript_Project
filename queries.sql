@@ -6,49 +6,53 @@ FROM
 
 -- query2
 SELECT
-	COUNT(DISTINCT *)
-FROM
-	mystic_manuscript.right_join;
+	COUNT(*)
+FROM(
+	SELECT DISTINCT *
+	FROM mystic_manuscript.right_join)
+AS 
+	distinct_rows;
 
 -- query3
 SELECT
 	COUNT(*)
 FROM
-	mystic_manuscript.columns
-WHERE
-	table_name = 'right_join';
+	information_schema.COLUMNS
+WHERE 
+	table_schema = 'mystic_manuscript'
+	AND table_name = 'right_join';
 
 -- query4
 SELECT
-	SUM(qtr) +
-	SUM('year') +
-	SUM('month') +
-	SUM(date_day) +
-	SUM(special_day) +
-	SUM(online_sales_offers) +
-	SUM('day') +
-	SUM(weekend) +
-	SUM(morning) +
-	SUM(afternoon) +
-	SUM(evening) +
-	SUM(night) +
-	SUM(gender_num) +
-	SUM(gender) +
-	SUM(quantity) +
-	SUM(item_price) +
-	SUM(shipping_price) +
-	SUM(total_amount) +
-	SUM(profit_percentage) +
-	SUM(profit_inr) +
-	SUM(cost_price) AS total
+	SUM(r.qtr) +
+	SUM(r.year) +
+	SUM(r.month) +
+	SUM(r.date_day) +
+	SUM(r.special_day) +
+	SUM(r.online_sale_offers) +
+	SUM(r.day) +
+	SUM(r.weekend) +
+	SUM(r.morning) +
+	SUM(r.afternoon) +
+	SUM(r.evening) +
+	SUM(r.night) +
+	SUM(r.gender_num) +
+	SUM(r.quantity) +
+	SUM(r.item_price) +
+	SUM(r.shipping_price) +
+	SUM(r.total_amount) +
+	SUM(r.profit_percentage) +
+	SUM(r.profit_inr) +
+	SUM(r.cost_price) AS total
 FROM
-	mystic_manuscript.right_join;
---SUM of all numeric columns
---Need to ask what columns to be summed
+	mystic_manuscript.right_join r;
+
+--11,680,963.46
 
 -- query5
 
---SUM OF ROW SUMS?
+SELECT
+	
 
 -- query6
 

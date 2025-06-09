@@ -29,7 +29,7 @@ CREATE TABLE mystic_manuscript.right_join(
 	currency VARCHAR(50),
 	item_price INT,
 	shipping_price INT,
-	ship_city VARCHAR(50),
+	ship_city VARCHAR(60),
 	ship_state VARCHAR(50),
 	ship_postal_code VARCHAR(50),
 	category VARCHAR(50),

@@ -40,3 +40,4 @@ Getting to know their role and interst:
 
 
 Don't remove duplicate data
+Handle empty values with NULL

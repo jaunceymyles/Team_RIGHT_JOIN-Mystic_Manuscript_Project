@@ -6,9 +6,11 @@ What format to use for dates?
 
 Should we rename any columns for clarity or business context? - Examples include "Qtr" ->     "Quarter_Number".
 
-How should we handle empty or irrelevant columns?
+How should we handle empty, duplicate/irrelevant columns?
 
 Do you have any naming conventions we must follow?
+
+Can you clarify the meaning of some columns and why they are essential to the final product? I.E Special Day, Weekend, Morning, Afternoon (etc)
 
 
 Data Cleaning and Standardisation:

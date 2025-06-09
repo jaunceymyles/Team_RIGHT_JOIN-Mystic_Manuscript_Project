@@ -1,3 +1,5 @@
 - Find issue with discrepancy in price inr and cost price
+	- Checked and actually matches (rounding issue)
 
 - Format dates
+- For query 5 sql date needs to be same format as excel

@@ -49,8 +49,6 @@ SELECT
 FROM
 	mystic_manuscript.right_join r;
 
--- 1481390812.46
-
 -- query5
 
 SELECT 
@@ -85,14 +83,20 @@ FROM(
 
 -- query6
 SELECT
-	*
+	r.date
 FROM
 	mystic_manuscript.right_join r
-WHERE
-	r.id IN ( 4, 69, 420, 3000, 2764 );
+ORDER BY
+	RANDOM()
+LIMIT 5;
+
+--NOT QUITE FINISHED DATE NEEDS TO MATCH DATE FORMAT OF SOURCE
 
 -- query7
 SELECT
 	*
 FROM
-	mystic_manuscript.right_join;
+	mystic_manuscript.right_join
+ORDER BY
+	RANDOM()
+LIMIT 5;

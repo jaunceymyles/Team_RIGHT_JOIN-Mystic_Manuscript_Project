@@ -136,4 +136,14 @@ WHERE
       COALESCE(Morning, 0) + COALESCE(Afternoon, 0) + COALESCE(Evening, 0)
     ELSE 1
   END <> 0;
-  
+
+
+
+
+-- SQL-15
+SELECT *
+FROM mystic_manuscript.right_join
+WHERE quantity < 0
+   OR item_price < 0
+   OR total_amount < 0
+   OR profit_inr < 0;

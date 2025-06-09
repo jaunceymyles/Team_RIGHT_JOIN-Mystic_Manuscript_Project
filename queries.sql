@@ -35,7 +35,7 @@ SELECT
 	SUM(r.weekend) +
 	SUM(r.morning) +
 	SUM(r.afternoon) +
-	SUM(CAST(r.ship_postal_pode AS INT)) +
+	SUM(CAST(r.ship_postal_code AS INT)) +
 	SUM(r.evening) +
 	SUM(r.night) +
 	SUM(r.gender_num) +
@@ -49,18 +49,39 @@ SELECT
 FROM
 	mystic_manuscript.right_join r;
 
---17737903.46
+-- 1481390812.46
 
 -- query5
 
 SELECT 
-    id,
-    COALESCE(item_price, 0) +
-    COALESCE(shipping_price, 0) +
-    COALESCE(quantity, 0) +
-    COALESCE(total_amount, 0) AS row_total
-FROM mystic_manuscript.right_join r
-WHERE id=1;
+    SUM(row_total) AS total
+FROM(
+	SELECT
+		r.id,
+		(r.id + 
+		r.qtr +
+		r.year +
+		r.month +
+		r.date_day +
+		r.special_day +
+		r.online_sale_offers +
+		r.day +
+		r.weekend +
+		r.morning +
+		r.afternoon +
+		CAST(r.ship_postal_code AS INT) +
+		r.evening +
+		r.night +
+		r.gender_num +
+		r.quantity +
+		r.item_price +
+		r.shipping_price +
+		r.total_amount +
+		r.profit_percentage +
+		r.profit_inr +
+		r.cost_price) AS row_total
+	FROM mystic_manuscript.right_join r
+);
 
 (r.id, r.qtr, r.YEAR, r.MONTH, r.date_day, r.special_day, r.online_sale_offers, r.DAY, r.weekend, r.morning, r.afternoon, r.ship_postal_code, r.evening, r.night, r.gender_num, r.quantity, r.item_price, r.shipping_price, r.total_amount, r.profit_precentage, r.profit_inr, r.cost_price)
 
@@ -71,7 +92,7 @@ SELECT
 FROM
 	mystic_manuscript.right_join r
 WHERE
-	r.id IS IN ( /* 5 Random Rows*/ )
+	r.id IN ( 4, 69, 420, 3000, 2764 );
 
 -- query7
 	

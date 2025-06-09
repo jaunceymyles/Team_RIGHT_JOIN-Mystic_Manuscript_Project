@@ -4,9 +4,9 @@
 
 CREATE TABLE mystic_manuscript.right_join(
 	ID INT PRIMARY KEY,
-	purchase_date DATE,
-	"date" VARCHAR(50),
-	"time" VARCHAR(50),
+	purchase_date TIMESTAMP,
+	"date" DATE,
+	"time" TIME,
 	"quarter" VARCHAR(50),
 	qtr INT,
 	"year" INT,
@@ -23,15 +23,15 @@ CREATE TABLE mystic_manuscript.right_join(
 	gender_num INT,
 	customer_id VARCHAR(50),
 	gender INT,
-	product_name INT,
+	product_name VARCHAR(200),
 	item_status VARCHAR(50),
 	quantity INT,
 	currency VARCHAR(50),
 	item_price INT,
 	shipping_price INT,
-	ship_city VARCHAR(50),
+	ship_city VARCHAR(60),
 	ship_state VARCHAR(50),
-	ship_postal_pode VARCHAR(50),
+	ship_postal_code VARCHAR(50),
 	category VARCHAR(50),
 	total_amount INT,
 	author VARCHAR(100),
@@ -45,7 +45,13 @@ CREATE TABLE mystic_manuscript.right_join(
 --grant permission
 GRANT 
     ALL 
-ON right_join 
+ON mystic_manuscript.right_join 
     TO da13_myja, da13_jasi, de13_nima;
+
+--grant permission
+GRANT 
+    SELECT 
+ON mystic_manuscript.right_join 
+    TO github_classroom;
 
 

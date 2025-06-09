@@ -113,3 +113,37 @@ GROUP BY id,
          profit_inr,
          cost_price
 HAVING COUNT(*) > 1;
+
+-- SQL-13
+SELECT
+  COUNT(CASE WHEN gender = 'F' THEN 1 END) AS female_count,
+  COUNT(CASE WHEN gender = 'M' THEN 1 END) AS male_count
+FROM mystic_manuscript.right_join;
+
+
+-- SQL-14
+SELECT *
+FROM mystic_manuscript.right_join
+WHERE
+  CASE 
+    WHEN Morning = 1 THEN 
+      COALESCE(Afternoon, 0) + COALESCE(Evening, 0) + COALESCE(Night, 0)
+    WHEN Afternoon = 1 THEN 
+      COALESCE(Morning, 0) + COALESCE(Evening, 0) + COALESCE(Night, 0)
+    WHEN Evening = 1 THEN 
+      COALESCE(Morning, 0) + COALESCE(Afternoon, 0) + COALESCE(Night, 0)
+    WHEN Night = 1 THEN 
+      COALESCE(Morning, 0) + COALESCE(Afternoon, 0) + COALESCE(Evening, 0)
+    ELSE 1
+  END <> 0;
+
+
+
+
+-- SQL-15
+SELECT *
+FROM mystic_manuscript.right_join
+WHERE quantity < 0
+   OR item_price < 0
+   OR total_amount < 0
+   OR profit_inr < 0;

@@ -24,6 +24,7 @@ Should we standardise categorical values - ‘M/F’ -> ‘Male/Female.
 
 
 
+
 Business and Analysis Goals:
 
 What are the main business questions that this dataset should answer?
@@ -34,3 +35,8 @@ Getting to know their role and interst:
 -What are your responsibilites leading on from our project?
 
 -Aside from key deliverables, what would you consider some extended goals from this project?
+
+
+
+
+Don't remove duplicate data

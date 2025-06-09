@@ -43,3 +43,4 @@ Deliverable Questions:
 
 
 Don't remove duplicate data
+Handle empty values with NULL

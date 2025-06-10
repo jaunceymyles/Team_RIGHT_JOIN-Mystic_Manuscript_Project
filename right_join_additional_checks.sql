@@ -316,10 +316,3 @@ WHERE quantity < 0
    OR total_amount < 0
    OR profit_inr < 0;
 
-
-
-
-
-SELECT * FROM mystic_manuscript.right_join
-
-

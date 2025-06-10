@@ -55,3 +55,26 @@ ON mystic_manuscript.right_join
     TO github_classroom;
 
 
+--fix purchase_date format
+CREATE TABLE mystic_manuscript.tmp_datetime (
+  id INT,
+  raw_datetime VARCHAR(50)
+);
+
+ALTER TABLE mystic_manuscript.tmp_datetime
+ADD COLUMN fixed_purchase_date TIMESTAMP;
+
+UPDATE mystic_manuscript.tmp_datetime
+SET fixed_purchase_date = TO_TIMESTAMP(raw_datetime, 'DD/MM/YYYY HH24:MI');
+
+ALTER TABLE mystic_manuscript.right_join
+DROP COLUMN purchase_date;
+
+ALTER TABLE mystic_manuscript.right_join
+ADD COLUMN purchase_date;
+
+UPDATE mystic_manuscript.right_join r
+SET purchase_date = t.fixed_purchase_date
+FROM mystic_manuscript.tmp_datetime t
+WHERE r.id = t.id;
+

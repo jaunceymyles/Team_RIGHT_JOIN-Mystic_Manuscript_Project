@@ -79,14 +79,13 @@ FROM(
 
 -- query6
 SELECT
+	r.id,
 	r.date
 FROM
 	mystic_manuscript.right_join r
 ORDER BY
 	RANDOM()
 LIMIT 5;
-
---NOT QUITE FINISHED DATE NEEDS TO MATCH DATE FORMAT OF SOURCE
 
 -- query7
 SELECT

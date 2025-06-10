@@ -24,7 +24,6 @@ WHERE
 
 -- query4
 SELECT
-	SUM(r.id) +
 	SUM(r.qtr) +
 	SUM(r.year) +
 	SUM(r.month) +
@@ -35,7 +34,6 @@ SELECT
 	SUM(r.weekend) +
 	SUM(r.morning) +
 	SUM(r.afternoon) +
-	SUM(CAST(r.ship_postal_code AS INT)) +
 	SUM(r.evening) +
 	SUM(r.night) +
 	SUM(r.gender_num) +
@@ -56,8 +54,7 @@ SELECT
 FROM(
 	SELECT
 		r.id,
-		(r.id + 
-		r.qtr +
+		(r.qtr +
 		r.year +
 		r.month +
 		r.date_day +
@@ -67,7 +64,6 @@ FROM(
 		r.weekend +
 		r.morning +
 		r.afternoon +
-		CAST(r.ship_postal_code AS INT) +
 		r.evening +
 		r.night +
 		r.gender_num +

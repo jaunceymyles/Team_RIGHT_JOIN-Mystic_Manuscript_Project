@@ -79,7 +79,6 @@ FROM(
 
 -- query6
 SELECT
-	r.id,
 	r.date
 FROM
 	mystic_manuscript.right_join r

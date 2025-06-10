@@ -1,4 +1,4 @@
--- queries 8
+-- query 8
 SELECT
     COUNT(*) FILTER (WHERE id IS NULL),
     COUNT(*) FILTER (WHERE purchase_date IS NULL),
@@ -37,7 +37,7 @@ SELECT
     COUNT(*) FILTER (WHERE cost_price IS NULL)
 FROM mystic_manuscript.right_join;
 
---Check for Duplicates
+--query 9
 SELECT id,
        purchase_date,
        date,
@@ -114,33 +114,201 @@ GROUP BY id,
          cost_price
 HAVING COUNT(*) > 1;
 
--- SQL-13
+--query 10
+SELECT
+    MIN(item_price) AS min_item_price,
+    MAX(item_price) AS max_item_price,
+    MIN(quantity) AS min_quantity,
+    MAX(quantity) AS max_quantity,
+    MIN(profit_inr) AS min_profit,
+    MAX(profit_inr) AS max_profit
+FROM mystic_manuscript.right_join;
+
+--query 11
+SELECT 'quarter' AS column_checked,
+       LOWER(quarter) AS lower_val,
+       ARRAY_AGG(DISTINCT quarter) AS case_variants,
+       COUNT(*) AS total
+FROM mystic_manuscript.right_join
+GROUP BY LOWER(quarter)
+HAVING COUNT(DISTINCT quarter) > 1
+
+UNION ALL
+
+SELECT 'customer_id'AS column_checked,
+       LOWER(customer_id),
+       ARRAY_AGG(DISTINCT customer_id),
+       COUNT(*)
+FROM mystic_manuscript.right_join
+GROUP BY LOWER(customer_id)
+HAVING COUNT(DISTINCT customer_id) > 1
+
+UNION ALL
+
+SELECT 'gender'AS column_checked,
+       LOWER(gender),
+       ARRAY_AGG(DISTINCT gender),
+       COUNT(*)
+FROM mystic_manuscript.right_join
+GROUP BY LOWER(gender)
+HAVING COUNT(DISTINCT gender) > 1
+
+UNION ALL
+
+SELECT 'item_status'AS column_checked,
+       LOWER(item_status),
+       ARRAY_AGG(DISTINCT item_status),
+       COUNT(*)
+FROM mystic_manuscript.right_join
+GROUP BY LOWER(item_status)
+HAVING COUNT(DISTINCT item_status) > 1
+
+UNION ALL
+
+SELECT 'currency'AS column_checked,
+       LOWER(currency),
+       ARRAY_AGG(DISTINCT currency),
+       COUNT(*)
+FROM mystic_manuscript.right_join
+GROUP BY LOWER(currency)
+HAVING COUNT(DISTINCT currency) > 1
+
+UNION ALL
+
+SELECT 'ship_city'AS column_checked,
+       LOWER(ship_city),
+       ARRAY_AGG(DISTINCT ship_city),
+       COUNT(*)
+FROM mystic_manuscript.right_join
+GROUP BY LOWER(ship_city)
+HAVING COUNT(DISTINCT ship_city) > 1
+
+UNION ALL
+
+SELECT 'ship_state'AS column_checked,
+       LOWER(ship_state),
+       ARRAY_AGG(DISTINCT ship_state),
+       COUNT(*)
+FROM mystic_manuscript.right_join
+GROUP BY LOWER(ship_state)
+HAVING COUNT(DISTINCT ship_state) > 1
+
+UNION ALL
+
+SELECT 'category'AS column_checked,
+       LOWER(category),
+       ARRAY_AGG(DISTINCT category),
+       COUNT(*)
+FROM mystic_manuscript.right_join
+GROUP BY LOWER(category)
+HAVING COUNT(DISTINCT category) > 1;
+
+-- query 12
+SELECT 
+    id,
+    item_price,
+    quantity,
+    total_amount,
+    profit_inr,
+    COST_price,
+    (item_price * quantity) - cost_price AS calculated_profit,
+    CASE
+        WHEN profit_inr = (item_price * quantity) - cost_price THEN 'Consistent'
+        ELSE 'Inconsistent'
+    END AS profit_consistency
+FROM mystic_manuscript.right_join
+WHERE profit_inr <> (item_price * quantity) - cost_price;
+
+
+-- query 13
 SELECT
   COUNT(CASE WHEN gender = 'F' THEN 1 END) AS female_count,
   COUNT(CASE WHEN gender = 'M' THEN 1 END) AS male_count
 FROM mystic_manuscript.right_join;
 
 
--- SQL-14
-SELECT *
-FROM mystic_manuscript.right_join
+-- query 14
+SELECT
+    r.id,
+    CAST(r.purchase_date AS TIME),
+    r.time,
+    CASE 
+        WHEN CAST(r.purchase_date AS TIME) = r.time THEN TRUE
+        ELSE FALSE
+    END AS "match"
+FROM
+    mystic_manuscript.right_join_test r
 WHERE
-  CASE 
-    WHEN Morning = 1 THEN 
-      COALESCE(Afternoon, 0) + COALESCE(Evening, 0) + COALESCE(Night, 0)
-    WHEN Afternoon = 1 THEN 
-      COALESCE(Morning, 0) + COALESCE(Evening, 0) + COALESCE(Night, 0)
-    WHEN Evening = 1 THEN 
-      COALESCE(Morning, 0) + COALESCE(Afternoon, 0) + COALESCE(Night, 0)
-    WHEN Night = 1 THEN 
-      COALESCE(Morning, 0) + COALESCE(Afternoon, 0) + COALESCE(Evening, 0)
-    ELSE 1
-  END <> 0;
+    CASE 
+        WHEN CAST(r.purchase_date AS TIME) = r.time THEN TRUE
+        ELSE FALSE
+    END = FALSE;
 
 
 
+SELECT *
+FROM(
+    SELECT
+        r.id,
+        CAST(r.purchase_date AS TIME),
+        r.time,
+        r.morning,
+        r.afternoon,
+        r.evening,
+        r.night,
+        CASE
+            WHEN r.morning = 1 AND (r.time <= '6:00:00' OR r.time > '12:00:00') THEN 'Incorrect Morning'
+            WHEN r.afternoon = 1 AND (r.time <= '12:00:00' OR r.time > '16:00:00') THEN 'Incorrect Afternoon'
+            WHEN r.evening = 1 AND (r.time <= '16:00:00' OR r.time > '20:00:00') THEN 'Incorrect Evening'
+            WHEN r.night = 1 AND NOT (r.time >= '20:00:00' OR r.time < '06:00:00') THEN 'Incorrect Night'
+            ELSE 'Correct'
+        END AS time_accuracy
+    FROM
+        mystic_manuscript.right_join_test r) sub
+WHERE
+    sub.time_accuracy <> 'Correct';
 
--- SQL-15
+
+SELECT
+    'morning' AS time_of_day,
+    MIN(r.time) AS "min",
+    MAX(r.time) AS "max"
+FROM
+    mystic_manuscript.right_join_test r
+WHERE r.morning = 1
+
+UNION ALL
+
+SELECT
+    'afternoon' AS time_of_day,
+    MIN(r.time) AS "min",
+    MAX(r.time) AS "max"
+FROM
+    mystic_manuscript.right_join_test r
+WHERE r.afternoon = 1
+
+UNION ALL
+
+SELECT
+    'evening' AS time_of_day,
+    MIN(r.time) AS "min",
+    MAX(r.time) AS "max"
+FROM
+    mystic_manuscript.right_join_test r
+WHERE r.evening = 1
+
+UNION ALL
+
+SELECT
+    'night' AS time_of_day,
+    MIN(r.time) AS "min",
+    MAX(r.time) AS "max"
+FROM
+    mystic_manuscript.right_join_test r
+WHERE r.night = 1;
+
+
+-- query 15
 SELECT *
 FROM mystic_manuscript.right_join
 WHERE quantity < 0
@@ -148,140 +316,10 @@ WHERE quantity < 0
    OR total_amount < 0
    OR profit_inr < 0;
 
-<<<<<<< HEAD
 
--- SQL-17 (Needs re-thinking about purchase_date formatting)
+
+
 
 SELECT * FROM mystic_manuscript.right_join
-WHERE
-    EXTRACT (YEAR FROM purchase_date) != "year" OR
-    EXTRACT (MONTH FROM purchase_date) != "month"  OR
-    EXTRACT (DAY FROM purchase_date) != date_day ;
-=======
->>>>>>> 2a074d56644f766e2e5fe235272681a6e7108b7c
 
-
-
-
-SELECT * FROM mystic_manuscript.right_join_test;
-
-
-
--- Checking datetimes with time of days
-SELECT
-	r.id,
-	CAST(r.purchase_date AS TIME),
-	r.time,
-	CASE 
-        WHEN CAST(r.purchase_date AS TIME) = r.time THEN TRUE
-        ELSE FALSE
-    END AS "match"
-FROM
-	mystic_manuscript.right_join_test r
-WHERE
-	CASE 
-        WHEN CAST(r.purchase_date AS TIME) = r.time THEN TRUE
-        ELSE FALSE
-    END = FALSE;
-
--- Checking dates with date_day month and year
-SELECT
-	r.id,
-	r.purchase_date,
-	CAST(r.purchase_date AS TIME),
-	r.time
-FROM
-	mystic_manuscript.right_join_test r;
-
-
--- Checking the time of day is correct
-SELECT *
-FROM(
-	SELECT
-		r.id,
-		CAST(r.purchase_date AS TIME),
-		r.time,
-		r.morning,
-		r.afternoon,
-		r.evening,
-		r.night,
-		CASE
-			WHEN r.morning = 1 AND (r.time <= '6:00:00' OR r.time > '12:00:00') THEN 'Incorrect Morning'
-			WHEN r.afternoon = 1 AND (r.time <= '12:00:00' OR r.time > '16:00:00') THEN 'Incorrect Afternoon'
-			WHEN r.evening = 1 AND (r.time <= '16:00:00' OR r.time > '20:00:00') THEN 'Incorrect Evening'
-			WHEN r.night = 1 AND NOT (r.time >= '20:00:00' OR r.time < '06:00:00') THEN 'Incorrect Night'
-			ELSE 'Correct'
-		END AS time_accuracy
-	FROM
-		mystic_manuscript.right_join_test r) sub
-WHERE
-	sub.time_accuracy <> 'Correct';
-
-SELECT
-	'morning' AS time_of_day,
-	MIN(r.time) AS "min",
-	MAX(r.time) AS "max"
-FROM
-	mystic_manuscript.right_join_test r
-WHERE r.morning = 1
-
-UNION ALL
-
-SELECT
-	'afternoon' AS time_of_day,
-	MIN(r.time) AS "min",
-	MAX(r.time) AS "max"
-FROM
-	mystic_manuscript.right_join_test r
-WHERE r.afternoon = 1
-
-UNION ALL
-
-SELECT
-	'evening' AS time_of_day,
-	MIN(r.time) AS "min",
-	MAX(r.time) AS "max"
-FROM
-	mystic_manuscript.right_join_test r
-WHERE r.evening = 1
-
-UNION ALL
-
-SELECT
-	'night' AS time_of_day,
-	MIN(r.time) AS "min",
-	MAX(r.time) AS "max"
-FROM
-	mystic_manuscript.right_join_test r
-WHERE r.night = 1;
-
---FIXING PURCHASE_DATE IN TEST
-CREATE TABLE mystic_manuscript.tmp_datetime (
-  id INT,
-  raw_datetime VARCHAR(50)
-);
-
-ALTER TABLE mystic_manuscript.right_join_test
-ADD COLUMN raw_datetime VARCHAR(20);
-
-UPDATE mystic_manuscript.right_join_test r
-SET raw_datetime = t.raw_datetime
-FROM mystic_manuscript.tmp_datetime t
-WHERE r.id = t.id;
-
-ALTER TABLE mystic_manuscript.right_join_test
-ADD COLUMN fixed_purchase_date TIMESTAMP;
-
-UPDATE mystic_manuscript.right_join_test
-SET fixed_purchase_date = TO_TIMESTAMP(raw_datetime, 'DD/MM/YYYY HH24:MI');
-
-ALTER TABLE mystic_manuscript.right_join_test
-DROP COLUMN raw_datetime;
-
-SELECT
-	*
-FROM
-	mystic_manuscript.right_join_test
-ORDER BY
-	id;
 

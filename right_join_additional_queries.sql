@@ -78,25 +78,26 @@ SELECT
     r.id,
     CAST(r.purchase_date AS TIME) AS purchase_time,
     r.time,
-    CASE 
+    CASE
         WHEN CAST(r.purchase_date AS TIME) = r.time THEN TRUE
         ELSE FALSE
-    END AS match
+    END AS same
 FROM
     mystic_manuscript.right_join r
 WHERE
-    CASE 
+    CASE
         WHEN CAST(r.purchase_date AS TIME) = r.time THEN TRUE
         ELSE FALSE
     END = FALSE;
 
 
 -- query 13
-SELECT *
-FROM(
+SELECT
+    *
+FROM (
     SELECT
         r.id,
-        CAST(r.purchase_date AS TIME),
+        CAST(r.purchase_date AS TIME) AS purchase_time,
         r.time,
         r.morning,
         r.afternoon,
@@ -110,7 +111,8 @@ FROM(
             ELSE 'Correct'
         END AS time_accuracy
     FROM
-        mystic_manuscript.right_join r) sub
+        mystic_manuscript.right_join r
+) sub
 WHERE
     sub.time_accuracy <> 'Correct';
 

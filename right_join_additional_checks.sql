@@ -148,6 +148,7 @@ WHERE quantity < 0
    OR total_amount < 0
    OR profit_inr < 0;
 
+<<<<<<< HEAD
 
 -- SQL-17 (Needs re-thinking about purchase_date formatting)
 
@@ -156,6 +157,8 @@ WHERE
     EXTRACT (YEAR FROM purchase_date) != "year" OR
     EXTRACT (MONTH FROM purchase_date) != "month"  OR
     EXTRACT (DAY FROM purchase_date) != date_day ;
+=======
+>>>>>>> 2a074d56644f766e2e5fe235272681a6e7108b7c
 
 
 

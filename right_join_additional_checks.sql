@@ -237,7 +237,7 @@ SELECT
         ELSE FALSE
     END AS "match"
 FROM
-    mystic_manuscript.right_join_test r
+    mystic_manuscript.right_join r
 WHERE
     CASE 
         WHEN CAST(r.purchase_date AS TIME) = r.time THEN TRUE
@@ -264,7 +264,7 @@ FROM(
             ELSE 'Correct'
         END AS time_accuracy
     FROM
-        mystic_manuscript.right_join_test r) sub
+        mystic_manuscript.right_join r) sub
 WHERE
     sub.time_accuracy <> 'Correct';
 
@@ -274,7 +274,7 @@ SELECT
     MIN(r.time) AS "min",
     MAX(r.time) AS "max"
 FROM
-    mystic_manuscript.right_join_test r
+    mystic_manuscript.right_join r
 WHERE r.morning = 1
 
 UNION ALL
@@ -284,7 +284,7 @@ SELECT
     MIN(r.time) AS "min",
     MAX(r.time) AS "max"
 FROM
-    mystic_manuscript.right_join_test r
+    mystic_manuscript.right_join r
 WHERE r.afternoon = 1
 
 UNION ALL
@@ -294,7 +294,7 @@ SELECT
     MIN(r.time) AS "min",
     MAX(r.time) AS "max"
 FROM
-    mystic_manuscript.right_join_test r
+    mystic_manuscript.right_join r
 WHERE r.evening = 1
 
 UNION ALL
@@ -304,7 +304,7 @@ SELECT
     MIN(r.time) AS "min",
     MAX(r.time) AS "max"
 FROM
-    mystic_manuscript.right_join_test r
+    mystic_manuscript.right_join r
 WHERE r.night = 1;
 
 
